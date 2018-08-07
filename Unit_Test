@@ -1,0 +1,143 @@
+package com.company;
+
+import org.junit.internal.runners.statements.Fail;
+
+import static org.junit.Assert.*;
+
+public class UtilitiesTest {
+Utilities utilities;
+String source;
+
+  public UtilitiesTest() {
+
+
+    }
+
+    @org.junit.Test
+    public void everyNthChar() {
+       utilities=new Utilities();
+       char [] nchar=new char[]{
+               'h','e','l','l','o'
+       };
+       char[] result=new char[]{
+                'e','l'
+       };
+      // String result=utilities.everyNthChar(nchar,2);
+       assertArrayEquals(result,utilities.everyNthChar(nchar,2));
+
+    }
+@org.junit.Before
+public  void setup(){
+    utilities=new Utilities();
+
+}    @org.junit.Test
+    public void removePairs(  ) throws Exception {
+utilities=new Utilities();
+         source= utilities.removePairs("AABCCDEEGFFH");
+        assertEquals("ABCDEGFH",source);
+      assertEquals("",utilities.removePairs(""));
+   //  assertNull("I would like to chgeck if you can be null",utilities.removePairs(null));
+    }
+
+    @org.junit.Test(expected = ArithmeticException.class)
+    public void converter()   {
+     utilities=new Utilities();
+     assertNull("you have null pinter exception",utilities.converter(10,0));   }
+
+    @org.junit.Test
+    public void nullIfOddLength() {
+        fail("this test has not been implemented yet");
+    }
+}
+---------------------------------------
+package com.company;
+
+/**
+ * Created by timbuchalka on 28/11/16.
+ */
+public class Utilities {
+
+    // Returns a char array containing every nth char. When
+    // sourceArray.length < n, returns sourceArray
+    public char[] everyNthChar(char[] sourceArray, int n) {
+
+        if(sourceArray == null || sourceArray.length < n) {
+            return sourceArray;
+        }
+        int returnedLength = sourceArray.length / n;
+
+
+        char[] result = new char[returnedLength];
+        int index = 0;
+
+        for(int i = n-1; i < sourceArray.length; i +=n) {
+            result[index++] = sourceArray[i];
+        }
+
+        return result;
+    }
+
+    // Removes pairs of the same character that are next
+    // to each other, by removing on e occurrencd of the character.
+    // "ABBCDEEF" -> "ABCDEF"
+    // "ABCBDEEF" -> "ABCBDEF" (the two B's aren't next to each other, so they
+    // aren't removed.
+    public String removePairs(String source) throws Exception {
+
+        // If length is less than  2, there won't be any pairs
+        if (source.length() <2 || source==null) {
+            return source;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        char[] string = source.toCharArray();
+
+        for(int i=0; i < string.length - 1; i++) {
+            System.out.println(string[i]);
+            if(string[i] != string[i + 1]) {
+                sb.append(string[i]);
+            }
+        }
+
+        System.out.println(string[string.length -1]);
+        // Add the final character, which is always safe
+        sb.append(string[string.length - 1]);
+
+        return sb.toString();
+    }
+
+    // perform a conversion based on some internal
+    // business rule.
+    public int converter(int a, int b) {
+        return (a/b) + (a * 30) -2;
+    }
+
+    public String nullIfOddLength(String source) {
+        if(source.length() % 2 == 0) {
+            return source;
+        }
+
+        return null;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
